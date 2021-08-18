@@ -1,8 +1,8 @@
 // Import dependencies
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
 
 // Create a new express application named 'app'
 const app = express();
@@ -18,30 +18,35 @@ app.use((req, res, next) => {
 
 // Configure the bodyParser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 // Configure the CORs middleware
 app.use(cors());
 // Require Route
-const api = require('./routes/routes');
+const api = require("./routes/routes");
 // Configure app to use route
-app.use('/api/v1/', api);
+app.use("/api/", api);
 
 // This middleware informs the express application to serve our compiled React files
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "staging"
+) {
+  app.use(express.static(path.join(__dirname, "client/build")));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
 
 // Catch any bad requests
-app.get('*', (req, res) => {
+app.get("*", (req, res) => {
   res.status(200).json({
-    msg: 'Catch All',
+    msg: "Catch All",
   });
 });
 

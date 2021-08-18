@@ -1,10 +1,12 @@
-const express = require('express');
+const express = require("express");
 const request = require("request");
 const Cookies = require("js-cookie");
 const SpotifyWebApi = require("spotify-web-api-node");
+require("dotenv").config();
 // const db = require("./db");
 
 const client_id = process.env.CLIENT_ID;
+console.log(client_id);
 const client_secret = process.env.SECRET_ID;
 const redirect_uri = process.env.REDIRECT_URI;
 const stateKey = "spotify_auth_state";
@@ -115,3 +117,20 @@ const refresh_token = (req, res) => {
   });
 };
 module.exports.refresh_token = refresh_token;
+
+const recommend = (req, res) => {
+  const recommendation_params = req.body.recommendation_params;
+  console.log(recommendation_params);
+
+  spotifyapi.getRecommendations(recommendation_params).then(
+    function (data) {
+      let recommendations = data.body;
+      console.log(recommendations);
+    },
+    function (err) {
+      console.log("Something went wrong!", err);
+    }
+  );
+};
+
+module.exports.recommend = recommend;
