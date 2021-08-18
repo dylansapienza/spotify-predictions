@@ -1,32 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-import axios from 'axios'
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import "./App.css";
+import LandingPage from "./components/LandingPage";
+import axios from "axios";
 
-
-
-function App(){
-
-  const [response, setResponse] = useState("")
-
-  function getResponse(){
-    axios.get('/api/v1/say-something').then((res) => {
-      setResponse(res.data);
-    });
-}
-
-  useEffect(() => {
-    getResponse();
-  }, [])
-
-
-
-  return(
-    <div className="App">
-        <h1>Hello from the frontend!</h1>
-        <h1>{response.body}</h1>
-      </div>
+function App() {
+  return (
+    <BrowserRouter>
+      <Route exact path="/" component={LandingPage} />
+    </BrowserRouter>
   );
-
 }
 
 export default App;
